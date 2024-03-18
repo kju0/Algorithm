@@ -41,10 +41,3 @@ for i in range(n):
     visit[i] = False
 
 print(answer)
-
-
-
-
-
-
-
