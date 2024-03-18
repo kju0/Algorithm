@@ -8,6 +8,10 @@ input = sys.stdin.readline
 #종료 시 cost 계속 비교
 def solve(start, now, val, depth):
     global answer
+    
+    if val > answer:
+        return
+    
     if depth == n:
         if arr[now][start]:
             if answer > val + arr[now][start]:
