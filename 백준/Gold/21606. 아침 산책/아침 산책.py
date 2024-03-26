@@ -1,40 +1,60 @@
 import sys
 input = sys.stdin.readline
 
+
 N = int(input())
 
-#실내 실외 구분 string
-gubun = input().rstrip()
+gubun = ["0"] + list(input().rstrip())
 
-arr = [[] for i in range(N+1)]
+arr = [[] for _ in range(N+1)]
 
-for i in range(N-1):
+for _ in range(N-1):
     a, b = map(int, input().split())
+
     arr[a].append(b)
     arr[b].append(a)
 
+#두가지 경우의 수 존재
+#실내 시작 - 실내 끝 로만 구성된 경우의 수
 
-#print(arr)
 
-#경로 개수
+stack = []
+visited = [False]*(N+1)
+
 answer = 0
+for i in range(1, N+1):
+    if gubun[i] == "1" and not visited[i]:
+        stack.append(i)
+        tmp = 1
 
-def dfs(idx):
-    global answer
-    visited[idx] = True
+        while stack:
+            idx = stack.pop()
+            visited[idx] = True
+            for x in arr[idx]:
+                if gubun[x] == "1" and not visited[x]:
+                    tmp += 1
+                    stack.append(x)
 
-    for i in arr[idx]:
-        if visited[i] == False:
-            if gubun[i-1] == "0": #실외인 경우 탐색 ing
-                dfs(i)
-            else:
-                answer += 1
+        tmp = (tmp-1)*2
+        #print(tmp)
+        answer += tmp
 
 for i in range(1, N+1):
-    #시작점 바뀔 때마다 초기화 -> 정녕 이 방법이 최선인고
-    visited = [False]*(N+1)
-    #실내 gubun[i-1] == 1인 경우 탐색 시작
-    if gubun[i-1] == "1":
-        dfs(i)
+    if gubun[i] == "0" and not visited[i]:
+        stack.append(i)
+        tmp = 0
+
+        while stack:
+            idx = stack.pop()
+            visited[idx] = True
+            for x in arr[idx]:
+                if gubun[x] == "1":
+                    tmp += 1
+                elif gubun[x] == "0" and not visited[x]:
+                    stack.append(x)
+
+        tmp = (tmp-1) * tmp
+        #print(tmp)
+        answer += tmp
 
 print(answer)
