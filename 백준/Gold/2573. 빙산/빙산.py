@@ -31,14 +31,12 @@ def bfs(x, y):
             ny = j + dy[r]
 
             if 0 <= nx < N and 0 <= ny < M and not visited[nx][ny]:
-                if graph[nx][ny] != 0:
+                if graph[nx][ny] > 0:
                     visited[nx][ny] = True
                     dq.append((nx, ny))
                 else:
                     melt += 1
         new_graph[i][j] -= melt
-        if new_graph[i][j] < 0:
-            new_graph[i][j] =0
 
 chk = False
 answer = 0
