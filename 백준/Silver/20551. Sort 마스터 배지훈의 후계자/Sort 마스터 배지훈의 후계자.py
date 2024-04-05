@@ -21,6 +21,10 @@ def find(num):
             start = mid + 1
         elif arr[mid] > num:
             end = mid - 1
+
+        #가장 먼저 등장한 위치를 알기 위해
+        #lower bound 사용
+        #그냥 이분탐색으로는 [-1, 1, 3, 3, 3, 4, 5, 6, 6] 이 인풋에서 오류남
         elif arr[mid] == num:
             if end == mid:
                 break
@@ -35,12 +39,3 @@ for _ in range(M):
     tmp = int(input())
     idx = find(tmp)
     print(idx)
-    
-
-
-
-
-
-
-
-
